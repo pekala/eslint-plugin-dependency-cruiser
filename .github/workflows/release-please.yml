@@ -18,7 +18,7 @@ jobs:
           release-type: node
           package-name: eslint-plugin-dependency-cruiser
   publish:
-    name: Publish to GPR
+    name: Publish to NPM
     runs-on: ubuntu-22.04
     needs: release
     if: ${{ needs.release.outputs.release_created }}
@@ -34,10 +34,3 @@ jobs:
       - run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-      - uses: actions/setup-node@v3
-        with:
-          node-version: "16.x"
-          registry-url: https://npm.pkg.github.com/
-      - run: yarn publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
