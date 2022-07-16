@@ -1,0 +1,11 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 2018
+  },
+  "extends": ["plugin:eslint-plugin/recommended"],
+  "rules": {
+    "eslint-plugin/require-meta-docs-description": "error"
+  }
+}

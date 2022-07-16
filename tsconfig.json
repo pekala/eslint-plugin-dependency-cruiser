@@ -1,0 +1,16 @@
+{
+    "include": ["./src"],
+    "compilerOptions": {
+        "target": "ES2019",
+        "module": "commonjs",
+        "lib": ["es2020"],
+        "outDir": "./dist",
+        "strict": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true
+    }
+}

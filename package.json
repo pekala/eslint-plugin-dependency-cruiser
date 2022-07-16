@@ -1,0 +1,36 @@
+{
+  "name": "eslint-plugin-dependency-cruiser",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "author": "Maciek Pekala <m@peka.la>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/eslint": "^8.4.5",
+    "@types/node": "^18.0.5",
+    "@typescript-eslint/parser": "^5.30.6",
+    "dependency-cruiser": "^11.11.0",
+    "eslint": "^8.19.0",
+    "eslint-plugin-eslint-plugin": "^5.0.0",
+    "tsup": "^6.1.3",
+    "typescript": "^4.7.4"
+  },
+  "peerDependencies": {
+    "dependency-cruiser": "^11.11.0",
+    "eslint": ">=0.8.0"
+  },
+  "scripts": {
+    "build": "tsup",
+    "watch": "tsup --watch"
+  },
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "splitting": false,
+    "sourcemap": false,
+    "clean": true
+  },
+  "dependencies": {
+    "ts-invariant": "^0.10.3"
+  }
+}
