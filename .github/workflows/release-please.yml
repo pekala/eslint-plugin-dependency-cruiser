@@ -1,0 +1,34 @@
+on:
+  push:
+    branches:
+      - main
+name: Release & Publish
+jobs:
+  release:
+    runs-on: ubuntu-22.04
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          release-type: node
+          package-name: eslint-plugin-dependency-cruiser
+  publish:
+    runs-on: ubuntu-22.04
+    needs: release
+    if: ${{ needs.release.outputs.release_created }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "yarn"
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
+      - uses: actions/setup-node@v3
+        with:
+          registry-url: "https://npm.pkg.github.com"
+      - run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
