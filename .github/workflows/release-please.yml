@@ -1,10 +1,13 @@
+name: Release & Publish
+
 on:
   push:
     branches:
       - main
-name: Release & Publish
+
 jobs:
   release:
+    name: Run "Release Please"
     runs-on: ubuntu-22.04
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
@@ -15,6 +18,7 @@ jobs:
           release-type: node
           package-name: eslint-plugin-dependency-cruiser
   publish:
+    name: Publish to GPR
     runs-on: ubuntu-22.04
     needs: release
     if: ${{ needs.release.outputs.release_created }}
