@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.4](https://github.com/pekala/eslint-plugin-dependency-cruiser/compare/v0.0.3...v0.0.4) (2022-07-16)
+
+
+### Miscellaneous Chores
+
+* Initial Release ([8cb5baf](https://github.com/pekala/eslint-plugin-dependency-cruiser/commit/8cb5baf25a60100aec254a8d910342286381c248))
+
 ## [0.0.3](https://github.com/pekala/eslint-plugin-dependency-cruiser/compare/v0.0.2...v0.0.3) (2022-07-16)
 
 
