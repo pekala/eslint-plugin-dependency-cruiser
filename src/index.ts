@@ -1,15 +1,17 @@
 import { ESLint } from "eslint";
-import { dependencyCruiserRule } from "./rule";
+import { getDependencyCruiserRule } from "./rule";
 
 const configuration: ESLint.Plugin = {
   rules: {
-    "dependency-cruiser": dependencyCruiserRule,
+    errors: getDependencyCruiserRule("error"),
+    warnings: getDependencyCruiserRule("warn"),
   },
   configs: {
-    recommended: {
+    all: {
       plugins: ["dependency-cruiser"],
       rules: {
-        "dependency-cruiser/dependency-cruiser": "error",
+        "dependency-cruiser/errors": "error",
+        "dependency-cruiser/warnings": "warn",
       },
     },
   },
