@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-dependency-cruiser",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "dist/index.js",
   "author": "Maciek Pekala <m@peka.la>",
   "license": "MIT",
