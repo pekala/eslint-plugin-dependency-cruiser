@@ -2,3 +2,59 @@
 
 Runs [Dependency Cruiser](https://github.com/sverweij/dependency-cruiser) as an
 [ESLint](https://eslint.org) rule and reports import rule violations.
+
+## Installation
+
+```console
+npm install --save-dev eslint-plugin
+```
+
+or
+
+```console
+yarn add --dev eslint-plugin-dependency-cruiser
+```
+
+`eslint-plugin-dependency-cruiser` does not install Dependency Cruiser or ESLint
+for you. You must install these yourself.
+
+Then, in your `.eslintrc.js` or `.eslintrc.json`:
+
+```json
+{
+  "plugins": ["dependency-cruiser"],
+  "extends": ["plugin:dependency-cruiser/all"]
+}
+```
+
+## Configuration
+
+By default the plugin looks for the Dependency Cruiser configuration and the
+baseline file in the default locations (`.dependency-cruiser.js` and
+`.dependency-cruiser-known-violations.json`). You can configure that using
+ESLint's settings, specifying `dependency-cruiser` key with a value of an object
+with `config` and `knownViolations`. Paths are relative to the project's root.
+For example:
+
+```json
+{
+  "plugins": ["dependency-cruiser"],
+  "extends": ["plugin:dependency-cruiser/all"],
+  "settings": {
+    "dependency-cruiser": {
+      "knownViolations": ".dependency-cruiser-baseline.json",
+      "config": ".dependency-cruiser.cjs"
+    }
+  }
+}
+```
+
+## Limitations
+
+The plugin is not exposing all validation features or configuration options of
+Dependency Cruiser's. Some things missing:
+
+- Support for loading webpack configuration
+- Support for detecting violations that require cruising the whole dependency
+  tree, e.g. circular dependencies
+- Support for rule types other than `forbidden` (i.e. `allowed` and `required`)
