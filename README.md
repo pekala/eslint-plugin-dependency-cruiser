@@ -3,6 +3,8 @@
 Runs [Dependency Cruiser](https://github.com/sverweij/dependency-cruiser) as an
 [ESLint](https://eslint.org) rule and reports import rule violations.
 
+<img width="500" alt="ESLint Dependency Cruiser displaying an error in VSCode" src="https://user-images.githubusercontent.com/4643658/179498433-8c691601-9e47-4fe2-a85c-ef56693903f1.png">
+
 ## Installation
 
 ```console
