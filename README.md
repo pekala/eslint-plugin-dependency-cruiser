@@ -58,3 +58,9 @@ Dependency Cruiser's. Some things missing:
 - Support for detecting violations that require cruising the whole dependency
   tree, e.g. circular dependencies
 - Support for rule types other than `forbidden` (i.e. `allowed` and `required`)
+
+## Performance
+
+In the current iteration, this plugin is fairly slow. It runs Dependency Cruiser to analyse 
+dependencies of each file. This makes it perform OK in development when ran by the editor on 
+a single file, but adds up quickly if running a full ESLint check for a large codebase.
