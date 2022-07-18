@@ -22,12 +22,13 @@ export function getDependencyCruiserRule(
       const settings: unknown = context.settings["dependency-cruiser"];
 
       const { depcruiseConfig, knownViolations, tsConfig } = getConfigs(
-        settings
+        settings,
+        context.getCwd()
       );
       const ruleSet = filterRules(depcruiseConfig, severity);
 
       const currentFileLocation = path.relative(
-        process.cwd(),
+        context.getCwd(),
         context.getPhysicalFilename()
       );
 
@@ -46,7 +47,7 @@ export function getDependencyCruiserRule(
           ...ruleSet.options,
           maxDepth: 1,
           validate: true,
-          knownViolations,
+          ...(knownViolations ? { knownViolations } : {}),
         },
         // Webpack configuration is not supported currently, contributions welcome!
         undefined,

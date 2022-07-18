@@ -23,13 +23,13 @@ let tsConfig: unknown;
  * we do it once here for the first run (when we know ESLint settings) and then
  * memoise it for the consecutive runs.
  */
-export function getConfigs(settings: unknown) {
+export function getConfigs(settings: unknown, cwd: string) {
   // We only check for DC config, since it's guaranteed to be present after we load it
   // the first time. The other configs are optional.
   if (!depcruiseConfig) {
-    depcruiseConfig = loadDependencyCruiserConfig(settings);
-    tsConfig = loadTsConfig(depcruiseConfig.options);
-    knownViolations = loadKnownViolations(settings);
+    depcruiseConfig = loadDependencyCruiserConfig(settings, cwd);
+    tsConfig = loadTsConfig(depcruiseConfig.options, cwd);
+    knownViolations = loadKnownViolations(settings, cwd);
   }
 
   return {
@@ -46,13 +46,13 @@ export function getConfigs(settings: unknown) {
  * the user via ESLint shared global configuration (`'dependency-cruiser'.config`)
  * @see https://github.com/sverweij/dependency-cruiser/blob/develop/doc/api.md#utility-functions
  */
-function loadDependencyCruiserConfig(settings: unknown) {
+function loadDependencyCruiserConfig(settings: unknown, cwd: string) {
   let configLocation = dependencyCruiserDefaults.DEFAULT_CONFIG_FILE_NAME;
   if (hasKey("config", settings) && typeof settings.config === "string") {
     configLocation = settings.config;
   }
   const depcruiseConfig: IConfiguration = extractDepcruiseConfig(
-    `./${configLocation}`
+    path.join(cwd, configLocation)
   );
   invariant(
     !!depcruiseConfig,
@@ -67,7 +67,7 @@ function loadDependencyCruiserConfig(settings: unknown) {
  * DC doesn't specify any types for this configuration, but we don't access it and can treat
  * as opaque
  */
-function loadTsConfig(options?: ICruiseOptions) {
+function loadTsConfig(options: ICruiseOptions | undefined, cwd: string) {
   // DC's types here are inconsistent with documentation and implementation.
   // `tsConfig` field from "options" part of config is used for loading TS config
   // but it's not present on the `ICruiseOptions` interface
@@ -75,7 +75,7 @@ function loadTsConfig(options?: ICruiseOptions) {
 
   if (tsConfigFileName) {
     try {
-      return extractTSConfig(`${tsConfigFileName}`) as unknown;
+      return extractTSConfig(path.join(cwd, tsConfigFileName)) as unknown;
     } catch (error) {
       return undefined;
     }
@@ -90,7 +90,7 @@ function loadTsConfig(options?: ICruiseOptions) {
  * do it here instead (using json5 package).
  * @see https://github.com/sverweij/dependency-cruiser/blob/develop/doc/cli.md#--ignore-known-ignore-known-violations
  */
-function loadKnownViolations(settings: unknown) {
+function loadKnownViolations(settings: unknown, cwd: string) {
   let baselineLocation = dependencyCruiserDefaults.DEFAULT_BASELINE_FILE_NAME;
   if (
     hasKey("knownViolationsFile", settings) &&
@@ -101,7 +101,7 @@ function loadKnownViolations(settings: unknown) {
 
   const absoluteFilePath = !path.isAbsolute(baselineLocation)
     ? baselineLocation
-    : path.join(process.cwd(), `./${baselineLocation}`);
+    : path.join(cwd, baselineLocation);
 
   try {
     return json5.parse(
