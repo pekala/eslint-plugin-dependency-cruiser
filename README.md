@@ -8,7 +8,7 @@ Runs [Dependency Cruiser](https://github.com/sverweij/dependency-cruiser) as an
 ## Installation
 
 ```console
-npm install --save-dev eslint-plugin
+npm install --save-dev eslint-plugin-dependency-cruiser
 ```
 
 or
